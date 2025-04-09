@@ -44,7 +44,6 @@
     "linux": {
       "target": ["AppImage", "zip"]
     },
-    "asarUnpack": "**/*",
-    "compile": false
+    "asarUnpack": "**/*"
   }
 }
