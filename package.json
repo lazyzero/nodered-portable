@@ -43,33 +43,8 @@
     ],
     "extraFiles": [
       {
-        "from": "node_modules/node-red",
-        "to": "node_modules/node-red",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/@node-red",
-        "to": "node_modules/@node-red",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/@node-red/nodes",
-        "to": "node_modules/@node-red/nodes",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/@node-red/nodes/examples",
-        "to": "node_modules/@node-red/nodes/examples",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/express",
-        "to": "node_modules/express",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "node_modules/npm",
-        "to": "node_modules/npm",
+        "from": "node_modules",
+        "to": "node_modules",
         "filter": ["**/*"]
       }
     ],
