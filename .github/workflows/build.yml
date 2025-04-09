@@ -30,7 +30,7 @@ jobs:
         sudo apt-get install -y fakeroot dpkg rpm libarchive-tools
 
     - name: Clean install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Build Electron App
       run: npm run dist -- --publish=never
