@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdkrieg/nodered-portable.git"
+    "url": "https://github.com/lazyzero/nodered-portable.git"
   },
   "config": {
     "forge": {
@@ -57,7 +57,9 @@
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.26.1"
+    "eslint-plugin-react": "^7.26.1",
+    "electron-builder": "^26.0.12",
+    "electron": "^35.1.4"
   },
   "build": {
     "appId": "de.lazyzero.noderedportable",
