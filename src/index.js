@@ -1,12 +1,19 @@
 const debug = "PROD" || process.env.debug || "PROD";
 
 import { app, BrowserWindow } from 'electron';
+import nodered from './run-nodered.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import electronSquirrelStartup from 'electron-squirrel-startup';
 
-const nodered = require("./run-nodered.js");
+// Get __dirname equivalent in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 nodered();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (electronSquirrelStartup) { // eslint-disable-line global-require
   app.quit();
 }
 

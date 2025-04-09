@@ -5,6 +5,7 @@
   "description": "Node-RED: Portable Version",
   "homepage": "http://nodered.org",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "nodered": "node ./src/run-nodered.js",
     "start": "electron-forge start",
@@ -22,7 +23,9 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "node-red": "^4.0.9"
+    "express": "^4.18.2",
+    "node-red": "^4.0.9",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "electron-builder": "^24.6.0",
