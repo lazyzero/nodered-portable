@@ -14,7 +14,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint src --color",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "npm-check": "node -e \"console.log('NPM Version:', require('child_process').execSync('npm -v').toString())\""
   },
   "author": "Matthew Krieg",
   "license": "MIT",
@@ -49,6 +50,16 @@
       {
         "from": "node_modules/@node-red",
         "to": "node_modules/@node-red",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "node_modules/@node-red/nodes",
+        "to": "node_modules/@node-red/nodes",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "node_modules/@node-red/nodes/examples",
+        "to": "node_modules/@node-red/nodes/examples",
         "filter": ["**/*"]
       },
       {

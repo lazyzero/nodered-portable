@@ -4,10 +4,24 @@ import { WebSocket, WebSocketServer } from 'ws';
 import RED from '../node_modules/node-red/lib/red.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
 
 // Get __dirname equivalent in ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Prüfe wichtige Verzeichnisse
+try {
+    const nodeRedDir = path.join(__dirname, '..', 'node_modules', 'node-red');
+    const nodeRedNodesDir = path.join(__dirname, '..', 'node_modules', '@node-red', 'nodes');
+    const nodeRedExamplesDir = path.join(__dirname, '..', 'node_modules', '@node-red', 'nodes', 'examples');
+    
+    console.log('Node-RED Verzeichnis existiert:', fs.existsSync(nodeRedDir));
+    console.log('Node-RED Nodes Verzeichnis existiert:', fs.existsSync(nodeRedNodesDir));
+    console.log('Node-RED Examples Verzeichnis existiert:', fs.existsSync(nodeRedExamplesDir));
+} catch (error) {
+    console.error('Fehler beim Prüfen der Verzeichnisse:', error);
+}
 
 const runNodeRed = function() {
     let inputs;
@@ -39,6 +53,10 @@ const runNodeRed = function() {
         // Create a server
         var REDserver = http.createServer(app);
 
+        // Prüfe, ob der Beispielknoten-Ordner existiert
+        const examplesDir = path.join(__dirname, '..', 'node_modules', '@node-red', 'nodes', 'examples');
+        const examplesDirExists = fs.existsSync(examplesDir);
+        
         // Create the settings object - see default settings.js file for other options
         var settings = {
             httpAdminRoot: inputs?.adminPath || "/admin",
@@ -53,9 +71,15 @@ const runNodeRed = function() {
                     }
                 }
             },
+            // Deaktiviere die Beispielknoten, wenn das Verzeichnis nicht existiert
+            nodesExcludes: examplesDirExists ? [] : ['@node-red/nodes/examples/**'],
+            // Kombiniere alle Editor-Theme-Einstellungen
             editorTheme: {
                 projects: {
                     enabled: true
+                },
+                palette: {
+                    editable: true
                 }
             }
         };
