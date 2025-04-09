@@ -32,9 +32,11 @@ jobs:
     - name: Clean install dependencies
       run: npm install
 
-    - name: Get version from package.json
-      id: get_version
-      run: echo "VERSION=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+    - name: Get clean Node-RED version
+        id: get_node_red_version
+        run: |
+          NR_VERSION=$(node -p "require('./package.json').dependencies['node-red'].replace(/^[^\d]*/, '')")
+          echo "NR_VERSION=$NR_VERSION" >> $GITHUB_ENV
 
     - name: Build Electron App
       run: npm run dist -- --publish=never
@@ -44,5 +46,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: NodeREDPortable-${{ env.VERSION }}-${{ matrix.os }}
+        name: NodeREDPortable-${{ env.NR_VERSION }}-${{ matrix.os }}
         path: dist/*
