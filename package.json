@@ -62,8 +62,9 @@
     "electron": "^35.1.4"
   },
   "build": {
-    "appId": "de.lazyzero.noderedportable",
+    "appId": "com.example.noderedportable",
     "productName": "NodeREDPortable",
+    "publish": null,
     "files": [
       "**/*"
     ],
@@ -74,7 +75,9 @@
       "target": ["nsis", "zip"]
     },
     "linux": {
-      "target": ["AppImage", "deb", "zip"]
-    }
+      "target": ["AppImage", "zip"]
+    },
+    "asarUnpack": "**/*",
+    "compile": false
   }
 }
