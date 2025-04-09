@@ -1,4 +1,4 @@
-name: Build Electron App for Windows and Linux
+name: Build Electron App
 
 on:
   push:
@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
         node-version: [18.x]
 
     steps:
@@ -22,7 +21,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        
+
     - name: Install dependencies
       run: npm install
 
@@ -34,5 +33,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: nodered-portable-${{ matrix.os }}
+        name: nodered-portable-build
         path: dist/
