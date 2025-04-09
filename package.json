@@ -11,7 +11,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint src --color"
+    "lint": "eslint src --color",
+    "dist": "electron-builder"
   },
   "author": "Matthew Krieg",
   "license": "MIT",
@@ -57,5 +58,15 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.26.1"
+  },
+  "build": {
+    "appId": "de.lazyzero.noderedportable",
+    "productName": "NodeREDPortable",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    }
   }
 }
