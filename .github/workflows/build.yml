@@ -31,8 +31,14 @@ jobs:
         
     - name: Clean install
       run: |
-        rm -rf node_modules
-        rm -f package-lock.json
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          Remove-Item -Recurse -Force node_modules
+          Remove-Item -Force package-lock.json
+        else
+          rm -rf node_modules
+          rm -f package-lock.json
+        fi
+      shell: bash
 
     - name: Install dependencies
       run: npm ci
