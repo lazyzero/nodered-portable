@@ -69,6 +69,12 @@
     ],
     "directories": {
       "buildResources": "build"
+    },
+    "win": {
+      "target": ["nsis", "zip"]
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "zip"]
     }
   }
 }
