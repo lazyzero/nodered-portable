@@ -39,6 +39,8 @@
     "files": [
       "**/*"
     ],
+    "dependencies": true,
+    "nodeModulesPath": "./",
     "directories": {
       "buildResources": "build"
     },
