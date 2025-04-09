@@ -8,7 +8,7 @@
         document.getElementById("inputForm").style="display:none";
         document.getElementById("waitingText").style="";
         port = port || 1880;
-        path = path || "/red";
+        path = path || "/admin";
         if(path[0] != "/") path = "/" + path;
         var url = `http://localhost:${port}${path}`;
         function getData(){

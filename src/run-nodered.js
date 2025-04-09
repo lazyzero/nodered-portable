@@ -34,8 +34,8 @@ module.exports = function(){
 
         // Create the settings object - see default settings.js file for other options
         var settings = {
-            httpAdminRoot: inputs.adminPath || "/red",
-            httpNodeRoot: inputs.nodePath || "/api",
+            httpAdminRoot: inputs.adminPath || "/admin",
+            httpNodeRoot: inputs.nodePath || "/",
             userDir:".",
             httpStatic:"public",
             contextStorage: {
@@ -44,6 +44,11 @@ module.exports = function(){
                     config: {
                         dir: "context"
                     }
+                }
+            },
+            editorTheme: {
+                projects: {
+                    enabled: true
                 }
             }
         };
