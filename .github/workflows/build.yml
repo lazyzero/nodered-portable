@@ -33,10 +33,10 @@ jobs:
       run: npm install
 
     - name: Get clean Node-RED version
-        id: get_node_red_version
-        run: |
-          NR_VERSION=$(node -p "require('./package.json').dependencies['node-red'].replace(/^[^\d]*/, '')")
-          echo "NR_VERSION=$NR_VERSION" >> $GITHUB_ENV
+      id: get_node_red_version
+      run: |
+        NR_VERSION=$(node -p "require('./package.json').dependencies['node-red'].replace(/^[^\d]*/, '')")
+        echo "NR_VERSION=$NR_VERSION" >> $GITHUB_ENV
 
     - name: Build Electron App
       run: npm run dist -- --publish=never
