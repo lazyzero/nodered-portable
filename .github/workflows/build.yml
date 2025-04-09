@@ -1,4 +1,4 @@
-name: Build Electron App
+name: Build Electron App for Windows and Linux
 
 on:
   push:
@@ -9,9 +9,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest]
         node-version: [18.x]
 
     steps:
@@ -22,16 +23,22 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install Linux build dependencies
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fakeroot dpkg rpm libarchive-tools
+
+    - name: Clean install dependencies
+      run: npm ci
 
     - name: Build Electron App
-      run: npm run dist
+      run: npm run dist -- --publish=never
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-    - name: Upload artifacts
+    - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: nodered-portable-build
+        name: nodered-portable-${{ matrix.os }}
         path: dist/
