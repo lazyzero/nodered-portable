@@ -8,43 +8,73 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [20.x]
+  # 1. Setup job to extract version from package.json
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+    - uses: actions/checkout@v4
 
+    - name: Extract version
+      id: get_version
+      run: |
+        VERSION=$(node -p "require('./package.json').version")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  # 2. Linux build
+  build-linux:
+    needs: setup
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 20
 
     - name: Install Linux build dependencies
-      if: runner.os == 'Linux'
       run: |
         sudo apt-get update
         sudo apt-get install -y fakeroot dpkg rpm libarchive-tools
 
-    - name: Clean install dependencies
+    - name: Install dependencies
       run: npm install
 
-    - name: Get clean Node-RED version
-      id: get_node_red_version
-      run: |
-        NR_VERSION=$(node -p "require('./package.json').dependencies['node-red'].replace(/^[^\d]*/, '')")
-        echo "NR_VERSION=$NR_VERSION" >> $GITHUB_ENV
-
-    - name: Build Electron App
+    - name: Build Electron App (Linux)
       run: npm run dist -- --publish=never
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-    - name: Upload build artifacts
+    - name: Upload Linux artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: NodeREDPortable-${{ env.NR_VERSION }}-${{ matrix.os }}
+        name: NodeREDPortable-${{ needs.setup.outputs.version }}-linux
+        path: dist/*
+
+  # 3. Windows build
+  build-windows:
+    needs: setup
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Electron App (Windows)
+      run: npm run dist -- --publish=never
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    - name: Upload Windows artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: NodeREDPortable-${{ needs.setup.outputs.version }}-windows
         path: dist/*
