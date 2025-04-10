@@ -62,7 +62,7 @@ const runNodeRed = function() {
             httpAdminRoot: inputs?.adminPath || "/admin",
             httpNodeRoot: inputs?.nodePath || "/",
             userDir:".",
-            httpStatic:"public",
+            httpStaticRoot:"/static/",
             contextStorage: {
                 default: {
                     module:"localfilesystem",
